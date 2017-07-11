@@ -1,0 +1,31 @@
+pipeline {
+  agent master
+  
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '2', artifactNumToKeepStr: '1'))
+  }
+  
+  stages {
+    stage('PRINT') {
+      steps {
+        sh 'echo $JOB_NAME'
+      }
+    }
+    stage('WRITE') {
+      steps {
+        sh 'echo $JOB_NAME'
+      }
+    }
+     stage('READ') {
+      steps {
+        sh 'echo $BUILD_NUMBER'
+      }
+    }
+  }
+  
+  post {
+    always {
+      archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
+    }
+  }
+}
